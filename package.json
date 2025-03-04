@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "build:dev": "ng build --configuration development",
-    "build:test": "ng build --configuration test && http-server -p 8081 -c-1 dist/ngbase-pwa-fb/browser",
-    "build-pwa": "ng build --configuration production && http-server -p 8080 -c-1 dist/ngbase-pwa-fb/browser",
+    "build-serve:test": "ng build --configuration test && http-server -p 8081 -c-1 dist/ngbase-pwa-fb/browser",
+    "build-serve:pwa": "ng build --configuration production && http-server -p 8080 -c-1 dist/ngbase-pwa-fb/browser",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
