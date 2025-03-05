@@ -9,5 +9,5 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   title = 'ngbase-pwa-fb';
-  environment1 = environment;
+  environment1 = environment.currentBuildVersion;
 }
