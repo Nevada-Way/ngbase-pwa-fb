@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
+  DocumentData,
   Firestore,
   Timestamp,
   collection,
@@ -21,36 +22,43 @@ export class FirestoreService {
   // The generic  C R U D  firestore functions below //
   /////////////////////////////////////////////////////
 
-  /**
-   * C R E A T E    A    N E W    D O C U M E N T    I N     F I R E S T O R E
-   * Creates a new expense log entry in the 'logs' collection.
-   * @param docData The data for the new log entry, conforming to the LogModel interface.
-   * @returns A Promise that resolves when the log entry is created successfully.
-   * @throws An error if the log entry creation fails.
-   */
-  protected async createDocument<T>(docData: Partial<T>): Promise<string> {
+  protected async createDocument<T extends DocumentData>(
+    collectionName: string,
+    docData: T, // Cannot be "partial<T>" must be the whole object <T>
+    addTimestamp: boolean
+  ): Promise<string> {
     try {
-      const logsCollection = collection(this.firestore, 'logs');
-      const newLogDocRef = doc(logsCollection); // Creates a new document reference with a unique ID
+      const collectionRefrence = collection(this.firestore, collectionName);
+      const newDocReference = doc(collectionRefrence); // Creates a new document reference with a unique ID
 
-      const timestampedLogData = {
-        ...docData, // Include existing log data
-        timeLogged: Timestamp.now(), // Add or overwrite timeLogged with the timestamp
-      };
+      const newDocData = addTimestamp
+        ? {
+            ...docData, // Include existing log data
+            timeStamped: Timestamp.now(), // Add or overwrite timeLogged with the timestamp
+          }
+        : docData; //If did not choose timestamp then the input is the whole object
 
-      await setDoc(newLogDocRef, timestampedLogData);
-      console.log('Log entry created successfully!');
+      await setDoc(newDocReference, newDocData);
+      console.log(
+        `Firestore doc was created successfully! But validating its ID value ...`
+      );
 
-      const logId = newLogDocRef.id; // Get the ID
+      const newDocId = newDocReference.id; // Get the ID
 
-      if (typeof logId !== 'string') {
-        console.error('Unexpected document ID type:', typeof logId, logId);
+      if (typeof newDocId !== 'string') {
+        console.error(
+          'Unexpected type (expected string type) of the Firestore document ID :',
+          typeof newDocId,
+          newDocId
+        );
         throw new Error(
-          'Could not retrieve document ID even though the log entry was created successfully.'
+          'Could not retrieve document ID from Firestore even though the log entry was created successfully.'
         );
       }
 
-      return newLogDocRef.id; //Will always return a string
+      console.log(`The ID of the newly created Firestore doc is "${newDocId}"`);
+
+      return newDocId; //Will always return a string
     } catch (error) {
       console.error('Error creating log entry:', error);
       throw error;
