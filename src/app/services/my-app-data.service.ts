@@ -29,10 +29,10 @@ export class MyAppDataService extends FirestoreService {
   public async addNewLogEntry(
     collectionName: string,
     userIdNumber: number,
-    logMessage: string,
-    addTimestamp: boolean
+    logMessage: string
+    //addTimestamp: boolean
   ): Promise<string> {
-    const logDataWholeObject = {
+    const logObject = {
       logUserIdNumber: userIdNumber,
       logMessage: logMessage,
       timeLogged: Timestamp.now(), // Add or overwrite timeLogged with the timestamp
@@ -40,8 +40,8 @@ export class MyAppDataService extends FirestoreService {
 
     const result: Promise<string> = this.createDocument(
       collectionName,
-      logDataWholeObject,
-      addTimestamp // true to auto create a timestamp, otherwise no timestamp
+      logObject,
+      false // true to auto create a timestamp, otherwise no timestamp
     );
     return result;
   }

@@ -14,10 +14,9 @@ export class AppComponent {
 
   constructor(private myAppDataService: MyAppDataService) {
     this.myAppDataService.addNewLogEntry(
-      'lala',
+      'test-mar-07',
       2,
-      'This is a test message',
-      true // True to add a timestamp
+      'This is a test message'
     );
   }
 }
