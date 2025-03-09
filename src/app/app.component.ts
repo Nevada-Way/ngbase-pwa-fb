@@ -13,6 +13,7 @@ export class AppComponent {
   title = 'ngbase-pwa-fb';
   environment1 = environment.currentBuildVersion;
   targetDocId = 'test-mar-07/LTepvrppR60YUEnEc1f2';
+  deleteTargetPath = 'test-mar-07/qWGQaeud2YyITywsJG75';
 
   constructor(private myAppDataService: MyAppDataService) {
     //////////////////////
@@ -31,5 +32,8 @@ export class AppComponent {
     this.myAppDataService.updateLogItem(this.targetDocId, {
       logMessage: 'New message',
     });
+
+    ////////////////
+    this.myAppDataService.deleteLogItem(this.deleteTargetPath);
   }
 }

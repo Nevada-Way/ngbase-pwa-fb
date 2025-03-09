@@ -89,5 +89,15 @@ export class MyAppDataService extends FirestoreService {
     }
   }
 
-  public async deleteLogEntry() {}
+  public async deleteLogItem(docItemId: string): Promise<void | null> {
+    try {
+      const deletedItemReply = await this.deleteDocument(docItemId);
+
+      console.log('deleteLogEntry() is returning this :', deletedItemReply);
+      return deletedItemReply;
+    } catch (error) {
+      console.error('Error trying to get a doc using getLogItemById:', error);
+      return null; // Return null to indicate failure
+    }
+  }
 }

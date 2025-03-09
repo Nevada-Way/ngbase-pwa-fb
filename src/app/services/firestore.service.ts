@@ -106,14 +106,6 @@ export class FirestoreService {
   }
 
   /**
-   * D E L E T E     A     D O C U M E N T    F R O M     F I R E S T O R E
-   * Creates a new expense log entry in the 'logs' collection.
-   * XXX @param docData The data for the new log entry, conforming to the LogModel interface.
-   * XXX @returns A Promise that resolves when the log entry is created successfully.
-   * XXX @throws An error if the log entry creation fails.
-   */
-
-  /**
    * D E L E T E  A  D O C U M E N T  F R O M  F I R E S T O R E
    * This function deletes a document from Firestore.
    * @param docPath The path to the document to be deleted.
