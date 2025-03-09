@@ -32,10 +32,10 @@ export class MyAppDataService extends FirestoreService {
     logMessage: string
     //addTimestamp: boolean
   ): Promise<string> {
-    const logObject = {
+    const logObject: MyAppLogModel = {
       logUserIdNumber: userIdNumber,
       logMessage: logMessage,
-      timeLogged: Timestamp.now(), // Add or overwrite timeLogged with the timestamp
+      logTimestamp: Timestamp.now(), // Add or overwrite timeLogged with the timestamp
     };
 
     const result: Promise<string> = this.createDocument(
@@ -76,6 +76,7 @@ export class MyAppDataService extends FirestoreService {
     docItemId: string,
     newItemData: Partial<MyAppLogModel>
   ): Promise<void> {
+    newItemData.logTimestamp = Timestamp.now();
     try {
       await this.updateDocument<MyAppLogModel>(
         docItemId /* 'budget/ni3RFtRqRuRWalX3gVBQ' */,
