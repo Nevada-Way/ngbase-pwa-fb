@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { environment } from '../environments/environment';
-import { MyAppDataService } from './services/my-app-data.service';
+import { LogEntriesService } from './services/log-entries.service';
 import { MyAppLogModel } from './models/log.model';
 @Component({
   selector: 'app-root',
@@ -15,7 +15,7 @@ export class AppComponent {
   targetDocId = 'test-mar-07/LTepvrppR60YUEnEc1f2';
   deleteTargetPath = 'test-mar-07/qWGQaeud2YyITywsJG75';
 
-  constructor(private myAppDataService: MyAppDataService) {
+  constructor(private myAppDataService: LogEntriesService) {
     //////////////////////
     this.myAppDataService.addNewLogEntry(
       'test-mar-07',
