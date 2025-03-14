@@ -18,7 +18,7 @@ export class AppComponent {
       this.swUpdate.versionUpdates.subscribe((event) => {
         if (
           event.type === 'VERSION_READY' &&
-          confirm('Ne version available. Do you want to load it ?')
+          confirm('New version available. Do you want to load it ?')
         ) {
           this.swUpdate.activateUpdate().then(() => window.location.reload());
         }
