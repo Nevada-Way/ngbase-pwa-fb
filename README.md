@@ -28,3 +28,12 @@ Implemented PWA features that exist / planned are :
 - ❌Offline with cached API fetched data, app displays values fetched from server (like FB).
 - ✔ Auto update , app will "know" a new version exists & will download+install it automatically.
 - ❌Notifications, the pwa app supports Firebase Messaging
+
+### chp-02-environment
+
+This chapter focuses on implementing environmentmanagment
+This includes :
+
+- ✔ Editing angular.json to support 3 environments dev, test and production.
+- ✔ Making the default environment.ts file support production values.
+- ✔ Setting values for fileReplacements for each different build target.
