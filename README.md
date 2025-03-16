@@ -40,9 +40,15 @@ This includes :
 
 ### chp-03-ngxbuild-secret
 
-This chapter focuses on managing secret values using ngx-build
+This chapter focuses on managing secret values using ngx-build, this
+is only relavent in the development local machine, when deploying in netlify
+ngx-env/build doesnt exist there.
+Hosting servers use their own tools and secret values are defined in the
+hosting service's UI.
+
 This includes :
 
-- ✔ Installing @ngx-build.
+- ✔ Installing @ngx-env/build.
 - ✔ In app component used the environment variable to display configuration build target.
-  Also updated the angular.json to use @ngx-env as builder.
+- ✔ Updated the angular.json to use @ngx-env as builder.
+- ❌WIP: Testing NOW in local http-server and all 3 env (ran build scripts from package.json )
