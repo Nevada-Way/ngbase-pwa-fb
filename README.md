@@ -44,4 +44,5 @@ This chapter focuses on managing secret values using ngx-build
 This includes :
 
 - ✔ Installing @ngx-build.
-- ✔ Installing @ngx-build.
+- ✔ In app component used the environment variable to display configuration build target.
+  Also updated the angular.json to use @ngx-env as builder.
