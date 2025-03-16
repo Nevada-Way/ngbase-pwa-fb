@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production",
+    "build:prod": "ng build --configuration production",
     "build:dev": "ng build --configuration development",
     "build-serve:test": "ng build --configuration test && http-server -p 8081 -c-1 dist/ngbase-pwa-fb/browser",
     "build-serve:pwa": "ng build --configuration production && http-server -p 8080 dist/ngbase-pwa-fb/browser",
