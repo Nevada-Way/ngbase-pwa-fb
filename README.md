@@ -31,9 +31,17 @@ Implemented PWA features that exist / planned are :
 
 ### chp-02-environment
 
-This chapter focuses on implementing environmentmanagment
+This chapter focuses on implementing environment managment
 This includes :
 
 - ✔ Editing angular.json to support 3 environments dev, test and production.
 - ✔ Making the default environment.ts file support production values.
 - ✔ Setting values for fileReplacements for each different build target.
+
+### chp-03-ngxbuild-secret
+
+This chapter focuses on managing secret values using ngx-build
+This includes :
+
+- ✔ Installing @ngx-build.
+- ✔ Installing @ngx-build.
