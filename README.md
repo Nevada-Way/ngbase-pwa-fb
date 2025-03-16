@@ -9,3 +9,22 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 ### Feb 24 2025
 
 Successful test result for today's commit (94e4f30eb71145aec9703d22dae3d73774ec95e1) with netlify and mobile device.
+
+## Chapters
+
+Each chapter focuses on a basic tool-feature
+
+### main
+
+This branch has all the features merged from all the chapters.
+
+### chp-01-pwa
+
+This chapter focuses on PWA (Progressive Web Application)
+Implemented PWA features that exist / planned are :
+
+- ✔ Install, enables app to be installed as a PWA , includes apps own logo an favicon
+- ✔ Offline with cached index.html and styles, app still works even when offline.
+- ❌Offline with cached API fetched data, app displays values fetched from server (like FB).
+- ✔ Auto update , app will "know" a new version exists & will download+install it automatically.
+- ❌Notifications, the pwa app supports Firebase Messaging

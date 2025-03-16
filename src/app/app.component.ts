@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { environment } from '../environments/environment';
+import { SwUpdate } from '@angular/service-worker';
+
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
@@ -9,5 +10,19 @@ import { environment } from '../environments/environment';
 })
 export class AppComponent {
   title = 'ngbase-pwa-fb';
-  environment1 = environment.currentBuildVersion;
+
+  constructor(private swUpdate: SwUpdate) {}
+
+  ngOnInit() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe((event) => {
+        if (
+          event.type === 'VERSION_READY' &&
+          confirm('New version available. Do you want to load it ?')
+        ) {
+          this.swUpdate.activateUpdate().then(() => window.location.reload());
+        }
+      });
+    }
+  }
 }
