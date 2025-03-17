@@ -40,15 +40,28 @@ This includes :
 
 ### chp-03-ngxbuild-secret
 
-This chapter focuses on managing secret values using ngx-build, this
-is only relavent in the development local machine, when deploying in netlify
-ngx-env/build doesnt exist there.
-Hosting servers use their own tools and secret values are defined in the
-hosting service's UI.
+This chapter focuses on managing secret values using @ngx-env/build.
+It's job is to inject, during the build process, environment variables from
+the .env files into your Angular application .
 
-This includes :
+The added value of using it is that we can exclude the secret values from the
+git repo. they are only on the local machine in .env file and ngx-env/builder will
+inject them during the build on our local machine.
+
+The @ngx-env/builder is a tool for building only, it is not part of the
+final result dist folder, it is not active during the execution of the app.
+
+It is a dependency in devDependencies, so when hosting on host service (like netlify)
+the service installs the @ngx-env/builder but oinly to support the creation of the dist folder contents.
+After the build is done nothing from ngx-env/builder will exist in the dist folder.
+
+This chapter includes :
 
 - ✔ Installing @ngx-env/build.
-- ✔ In app component used the environment variable to display configuration build target.
-- ✔ Updated the angular.json to use @ngx-env as builder.
-- ❌WIP: Testing NOW in local http-server and all 3 env (ran build scripts from package.json )
+- ✔ We implement the use of .env to set values in the environment files.
+  using import.meta.env to refrencew the values in .env
+- ✔ We updated the angular.json to use @ngx-env as builder, it substitutes the default
+  angular cli builder named : '@angular-devkit/build-angular'
+- ✔ Tested & passed on local machine with http-server, ran all 3 environments.
+- ✔ Tested & passed deploy on netlify. Worked well using netlify's own environment variables
+  used as substitute for the .env which is excluded from the git repo.
