@@ -66,7 +66,7 @@ This chapter includes :
 - ✔ Tested & passed deploy on netlify. Worked well using netlify's own environment variables
   used as substitute for the .env which is excluded from the git repo.
 
-### chp-01-pwa
+### chp-04-angular-fire
 
 This chapter focuses on Firebase Firestore
 
