@@ -18,7 +18,7 @@ export class AppComponent {
   constructor(private myAppDataService: LogEntriesService) {
     //////////////////////
     this.myAppDataService.addNewLogEntry(
-      'test-mar-07',
+      'test-mar-17',
       2,
       'This is a test message'
     );
