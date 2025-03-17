@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
