@@ -85,9 +85,19 @@ This chapter focuses on Firebase Firestore
   the fb api, so one shared service focuses on the interface with fb-api while
   all the rest are focused on their tasks and interface with the shared service.
 
-- ✔ I implemented the log-entries triggering inside the constructor of the
-  app.component.ts file, TODO need to implement a button when click does
-  all the interactions.
+- ✔ I implemented the CRUD functionality of the log-entries to be triggered
+  automaticaly every time the app.component constructor is activated (page refreshes)
+
+- ❌ Need to name the doc id with a timestamp so that they are listed in FB console
+  chronologicaly.
+
+- ❌ Need to implement a UI to play around with the db
+  Add a button that when clicked creates a new log entry.
+
+- ❌ A input field to input id of item exiting db doc and radio buttons as follows :
+  (1) Radio button to Read message of doc
+  (2) Radio button to Update the doc (a hard-coded text is concatenated to start of message)
+  (3) Radio button to Delete the doc
 
 FYI : This code is not intended for UI interaction , just the programmer
 can set values in the code or comment out in order to control the app.
