@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { SwUpdate } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { LogEntriesService } from './services/log-entries.service';
 import { MyAppLogModel } from './models/log.model';
