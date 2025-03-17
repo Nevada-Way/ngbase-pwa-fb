@@ -65,3 +65,30 @@ This chapter includes :
 - ✔ Tested & passed on local machine with http-server, ran all 3 environments.
 - ✔ Tested & passed deploy on netlify. Worked well using netlify's own environment variables
   used as substitute for the .env which is excluded from the git repo.
+
+### chp-01-pwa
+
+This chapter focuses on Firebase Firestore
+
+- ✔ I created a FB project in the FB console.
+- ✔ Installed @angular/fire
+- ✔ In .env file I set the real values for the firebase & Firestore API
+  I also did this in the netlify environment values UI.
+- ✔ Added firebase as provider in app.config.ts
+- ✔ I created a firestore service in the services folder, this
+  holds the generic CRUD functions for firestore, any service/component
+  in the app can use these because they are generic.
+- ✔ I also created another service for CRUD operations, this is a specific
+  service for the app's log-entries.
+  The concept is seperation of concerns, each service is focused on its
+  specific task, so we dont want all of them interacting with
+  the fb api, so one shared service focuses on the interface with fb-api while
+  all the rest are focused on their tasks and interface with the shared service.
+
+- ✔ I implemented the log-entries triggering inside the constructor of the
+  app.component.ts file, TODO need to implement a button when click does
+  all the interactions.
+
+FYI : This code is not intended for UI interaction , just the programmer
+can set values in the code or comment out in order to control the app.
+This chp-04 is meant as base to develop your own interactions with FB.
