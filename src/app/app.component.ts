@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { SwUpdate } from '@angular/service-worker';
 })
 export class AppComponent {
   title = 'ngbase-pwa-fb';
+  buildVerFromEnvironment = environment.currentBuildVersion;
 
   constructor(private swUpdate: SwUpdate) {}
 

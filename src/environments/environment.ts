@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   configurationMessage: 'The configuration is: production',
-  currentBuildVersion: import.meta.env['NG_APP_PRD_VERSION'],
+  currentBuildVersion: 'This is production build, version 2025.03.17 13:30',
 };
