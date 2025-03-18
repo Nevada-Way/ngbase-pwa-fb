@@ -15,7 +15,7 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@ngx-env/builder:application",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
             "outputPath": "dist/ngbase-pwa-fb",
             "index": "src/index.html",
