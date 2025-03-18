@@ -6,6 +6,7 @@ export const environment = {
   firebaseConfig: {
     apiKey: import.meta.env['NG_APP_TST_FIREBASE_API_KEY'],
     authDomain: import.meta.env['NG_APP_TST_FIREBASE_AUTH_DOMAIN'],
+    databaseURL: import.meta.env['NG_APP_TST_FIREBASE_DATABASE_URL'],
     projectId: import.meta.env['NG_APP_TST_FIREBASE_PROJECT_ID'],
     storageBucket: import.meta.env['NG_APP_TST_FIREBASE_STORAGE_BUCKET'],
     messagingSenderId: import.meta.env[

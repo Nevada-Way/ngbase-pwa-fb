@@ -15,7 +15,10 @@ import { provideServiceWorker } from '@angular/service-worker';
 
 // For Firebase support
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+// For Firestore support
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+// For Realtime Database support
+import { getDatabase, provideDatabase } from '@angular/fire/database';
 
 // Setting appConfig object
 export const appConfig: ApplicationConfig = {
@@ -33,5 +36,7 @@ export const appConfig: ApplicationConfig = {
     // Providers for firebase
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    // Registering FB Realtime DataBase with Angular's dependency injection system
+    provideDatabase(() => getDatabase()),
   ],
 };
