@@ -52,5 +52,11 @@ export class AppComponent {
       userFirstName: 'Felix',
       userLevel: 2,
     });
+
+    this.userDbService.createNewUser({
+      userId: '3e3e3_2',
+      userFirstName: 'Felix2',
+      userLevel: 3,
+    });
   }
 }

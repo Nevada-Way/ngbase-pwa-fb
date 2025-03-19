@@ -10,13 +10,14 @@ export class UserDbService extends RealtimeDbService {
     super(realtimeDbService['database']);
   }
 
-  async createNewUser(user: UserInfoModel): Promise<string> {
+  async createNewUser(userDataObject: UserInfoModel): Promise<string> {
     try {
       // Assuming your user data is stored under the 'users' path
       const userKey = await this.createEntry<UserInfoModel>(
-        'users',
-        user,
-        false // No timestamp needed for this example
+        'users/my-id',
+        userDataObject,
+        false, // If false no FB timestamp will be added to the userDataObject
+        true // Value of useFbCustomId if true uses path as is, if false uses FB auto gen ID
       );
       return userKey;
     } catch (error) {
