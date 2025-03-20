@@ -76,4 +76,14 @@ export class RealtimeDbService {
       throw error;
     }
   }
+
+  protected async updateEntry<T>(path: string, data: T): Promise<void> {
+    try {
+      const entryRef = ref(this.database, path);
+      await set(entryRef, data);
+    } catch (error) {
+      console.error('Error updating Realtime Database entry:', error);
+      throw error;
+    }
+  }
 }

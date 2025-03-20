@@ -60,12 +60,6 @@ export class AppComponent {
       userFirstName: fakeFirstName_1,
       userLevel: initialLevel,
     });
-
-    this.userDbService.createNewUser({
-      userId: fakeUserId_2,
-      userFirstName: fakeFirstName_2,
-      userLevel: initialLevel + 1,
-    });
   }
 
   /**
