@@ -16,7 +16,10 @@ export class AppComponent {
   targetDocId = 'test-mar-07/LTepvrppR60YUEnEc1f2';
   deleteTargetPath = 'test-mar-07/qWGQaeud2YyITywsJG75';
 
-  constructor(private myAppDataService: LogEntriesService) {
+  constructor(
+    private swUpdate: SwUpdate,
+    private myAppDataService: LogEntriesService
+  ) {
     //////////////////////
     this.myAppDataService.addNewLogEntry(
       'test-mar-17',
@@ -36,5 +39,18 @@ export class AppComponent {
 
     ////////////////
     this.myAppDataService.deleteLogItem(this.deleteTargetPath);
+  }
+
+  ngOnInit() {
+    if (this.swUpdate.isEnabled) {
+      this.swUpdate.versionUpdates.subscribe((event) => {
+        if (
+          event.type === 'VERSION_READY' &&
+          confirm('New version available. Do you want to load it ?')
+        ) {
+          this.swUpdate.activateUpdate().then(() => window.location.reload());
+        }
+      });
+    }
   }
 }
