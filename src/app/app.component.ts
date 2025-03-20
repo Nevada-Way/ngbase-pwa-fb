@@ -48,15 +48,13 @@ export class AppComponent {
     // Define specific values for Firestor testing
     // use the Firebase console to play with values
     //////////////////////
-    const fakeUserId_1 = 'user-id-1';
-    const fakeUserId_2 = 'user-id-2';
+    const noUserId = 'pending-id';
     const fakeFirstName_1 = 'first-name-1';
-    const fakeFirstName_2 = 'first-name-2';
     const initialLevel = 1;
 
     //////////////////////
     this.userDbService.createNewUser({
-      userId: fakeUserId_1,
+      userId: noUserId,
       userFirstName: fakeFirstName_1,
       userLevel: initialLevel,
     });
