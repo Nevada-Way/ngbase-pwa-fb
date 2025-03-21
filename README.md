@@ -14,9 +14,13 @@ Successful test result for today's commit (94e4f30eb71145aec9703d22dae3d73774ec9
 
 Each chapter focuses on a basic tool-feature
 
+### =========================================================================================
+
 ### main
 
 This branch has all the features merged from all the chapters.
+
+### =========================================================================================
 
 ### chp-01-pwa
 
@@ -29,6 +33,8 @@ Implemented PWA features that exist / planned are :
 - ✔ Auto update , app will "know" a new version exists & will download+install it automatically.
 - ❌Notifications, the pwa app supports Firebase Messaging
 
+### =========================================================================================
+
 ### chp-02-environment
 
 This chapter focuses on implementing environment managment
@@ -37,6 +43,8 @@ This includes :
 - ✔ Editing angular.json to support 3 environments dev, test and production.
 - ✔ Making the default environment.ts file support production values.
 - ✔ Setting values for fileReplacements for each different build target.
+
+### =========================================================================================
 
 ### chp-03-ngxbuild-secret
 
@@ -66,6 +74,8 @@ This chapter includes :
 - ✔ Tested & passed deploy on netlify. Worked well using netlify's own environment variables
   used as substitute for the .env which is excluded from the git repo.
 
+### =========================================================================================
+
 ### chp-04-angular-fire
 
 This chapter focuses on Firebase Firestore
@@ -88,6 +98,7 @@ This chapter focuses on Firebase Firestore
 - ✔ I implemented the CRUD functionality of the log-entries to be triggered
   automaticaly every time the app.component constructor is activated (page refreshes)
 
+- BACKLOG
 - ❌ Need to name the doc id with a timestamp so that they are listed in FB console
   chronologicaly.
 
@@ -102,3 +113,24 @@ This chapter focuses on Firebase Firestore
 FYI : This code is not intended for UI interaction , just the programmer
 can set values in the code or comment out in order to control the app.
 This chp-04 is meant as base to develop your own interactions with FB.
+
+### =========================================================================================
+
+### chp-05-firebase-rtdb
+
+This chapter focuses on Firebase Realtime Database
+
+- ✔ To the existing FB project (used in chp-04) I added the Realtime DB tool
+- ✔ I created a generic service (rtdb.service)to directly interact with the rtdb.
+- It curently has a createEntry() method and a updateEntry() method.
+- ✔ I created a specific feature service (user-db.service) to interact with the rtdb service.
+- It curently has a createNewUser() method.
+
+- ✔ To verify that the services work I created a testRealTimeDbService() function in
+  the app.component and invoke it from ngOnInit(). Its only action is to create a new user object.
+
+- BACKLOG
+- ❌ Add the read capability
+- ❌ Add the delete capability
+- ❌ In the user-db.service add an updateUser() function
+- ❌ Add function that fetches a list (like list of all the users)
