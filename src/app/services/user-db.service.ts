@@ -11,6 +11,15 @@ export class UserDbService extends RealtimeDbService {
     super(realtimeDbService['database']);
   }
 
+  /**
+   * No matter wich opton you choose the 'userId' property of the 'originalUserDataObject'
+   * will be updated with the value of the newly created entry's key.
+   *
+   * @param originalUserDataObject
+   * @param appendTimestampToMyDataObject
+   * @param iWantFbToGenerateTheRootObjectId
+   * @returns
+   */
   async createNewUser(
     originalUserDataObject: UserInfoModel,
     appendTimestampToMyDataObject: boolean, // Controls wether to add a timestamp to the entry
@@ -57,7 +66,7 @@ export class UserDbService extends RealtimeDbService {
 
     try {
       // Create a new entry in the database
-      const autoGenFirebaseKey = await this.createEntry<UserInfoModel>(
+      const autoGenFirebaseKey: string = await this.createEntry<UserInfoModel>(
         fullPathToUserId,
         newDataObject,
 
@@ -70,18 +79,25 @@ export class UserDbService extends RealtimeDbService {
       );
 
       if (iWantFbToGenerateTheRootObjectId) {
-        ////// This section will update the userDataObject.userId with the entryAutoId
-        // That way our userId will have the same unique value of the location
-        //  reference it is stored in the database.
-        const updatedUserData = {
-          ...newDataObject,
-          userId: autoGenFirebaseKey,
-        };
-
+        //Now that we have the FB auto generated key we can
+        // calculate the path to the newly created object
         fullPathToUserId = pathOfUsersTree + '/' + autoGenFirebaseKey;
-        // Update the entry in the database with the updated data
+
+        // And now we can also update the value of the 'userId' property
+        const updatedUserData = { userId: autoGenFirebaseKey };
         await this.updateEntry(fullPathToUserId, updatedUserData);
       }
+      ////// This section will update the userDataObject.userId with the entryAutoId
+      // That way our userId will have the same unique value of the location
+      //  reference it is stored in the database.
+      // const updatedUserData = {
+      //   ...newDataObject,
+      //   userId: autoGenFirebaseKey,
+      // };
+
+      // Update the entry in the database with the updated data
+      //await this.completeOverwriteEntry(fullPathToUserId, updatedUserData);
+      //}
 
       return autoGenFirebaseKey;
     } catch (error) {

@@ -6,6 +6,7 @@ import {
   set,
   serverTimestamp,
   DatabaseReference,
+  update,
 } from '@angular/fire/database';
 
 @Injectable({
@@ -118,12 +119,31 @@ export class RealtimeDbService {
     }
   }
 
+  protected async updateEntry<T>(
+    path: string,
+    data: Partial<T>
+  ): Promise<void> {
+    try {
+      const entryRef = ref(this.database, path);
+      await update(entryRef, data);
+    } catch (error) {
+      console.error('Error updating Realtime Database entry:', error);
+      throw error;
+    }
+  }
+
   /**
-   *
+   * This method completly overwrites an existing entry in the Realtime Database.
+   * This in needed in the case where we want to update an entry with an object
+   * that either has a different structure than the original object
+   * or that most of its properties values are different.
    * @param path
    * @param data
    */
-  protected async updateEntry<T>(path: string, data: T): Promise<void> {
+  protected async completeOverwriteEntry<T>(
+    path: string,
+    data: T
+  ): Promise<void> {
     try {
       const entryRef = ref(this.database, path);
       await set(entryRef, data);
