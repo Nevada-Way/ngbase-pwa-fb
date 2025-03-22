@@ -19,19 +19,16 @@ export class RealtimeDbService {
   /**
    * Creates a new entry in a Realtime Database path.
    *
-   * This function adds a new entry to the specified Realtime Database path.
-   * It has two optional features: that can be turned on or off:
+   * This method adds a new entry to the specified Realtime Database path.
+   * It has an optional feature to control how the object root key is generated.
    *
-   * (1) addTimestamp : Controls the option to automatically append a property
-   *     named 'timeStamped'to the input data object.
-   *
-   * (2) useFbCustomId : Controls the option to use a FB unique chronological ordered
-   *     name for the object root or to use the name given by the 'path' input parameter.
+   * By setting 'generateFbUniqueKey' true/false you control wether this method
+   * will use Firebase's unique chronological ordered key naming service (push())
+   * or use the last part of the path parameter as the key for the new entry.
    *
    * @template T The type of the entry data.
    * @param path The Realtime Database path to add the entry to.
    * @param data The data for the new entry.
-   * @param addTimestamp A boolean indicating whether to add a timestamp to the entry.
    * @param generateFbUniqueKey A boolean indicating whether to use the FB auto gen ID.
    *
    * @returns A Promise that resolves with the key <string> of the newly created entry.
@@ -55,33 +52,38 @@ export class RealtimeDbService {
       //         FYI: If we use this value to set() the data object then the
       //         name of the root of the object (the key) will be the last part
       //         of the path parameter.
-      //         For example if path is 'allUsers/user-23' then
-      //         the name of the object's root  will be 'user-23'
+      //         For example if path is 'allUsers/user-23' then using set(entryRef) will
+      //         give the object's root the value of 'user-23'.
+      //
       const entryRef: DatabaseReference = ref(this.database, path);
 
       /////////////////////////////////////////////////////////////////
-      // STEP-2: Decide on the value of the new entry's key
-      //         and create a new entry reference with that key.
-      //      We have two options here:
-      //      (A) If generateFbUniqueKey is true then we will let Firebase
+      // STEP-2: Decide what the objects root key value will be.
+      //         whatever we choos (with generateFbUniqueKey) the
+      //         value will be stored in the 'newerEntryRef' variable.
+      //
+      //      We have two options for 'generateFbUniqueKey':
+      //      (A) If it's true then we will let Firebase
       //          create a unique key using the push() method.
-      //      (B) Otherwise (case false) then we will use the last part of the
+      //      (B) Otherwise, when false we will use the last part of the
       //          path parameter as the key of the new entry.
       let newerEntryRef: DatabaseReference | null = null;
 
       if (generateFbUniqueKey) {
-        // STEP23A :
-        // Case (A) when generateFbUniqueKey is true so we invoke the
+        //
+        // Case (2A) when generateFbUniqueKey is true we invoke the
         // push() method to have Firebase create the key.
         // We need to use the 'entryRef' value so that firebase will know for what
-        // object we want the unique key. We use entryRef because it was created
-        // with the path parameter for the specific data object.
-
+        // object we want the unique key.
+        // We use entryRef because it was created with the path parameter for
+        // the specific data object.
+        //
         newerEntryRef = push(entryRef); // Genreating a unique chronological key value
       } else {
-        // STEP-32 :
-        // Case (B) when generateFbUniqueKey is false so we use the last part of the
+        //
+        // Case (2B) when generateFbUniqueKey is false we use the last part of the
         // path parameter as the key of the new entry.
+        // If path is 'allUsers/user-23' then the key of the new entry will be 'user-23'.
         //
         console.log('In option 3B, using The path is : ', path);
         newerEntryRef = entryRef;
@@ -99,6 +101,7 @@ export class RealtimeDbService {
       //         reference to the new entry (for either of cases (A) or (B) above).
       await set(newerEntryRef, data); // Writing the data object to the database
 
+      // Now lets get the value of the key and return it to the caller
       const newEntryKey = newerEntryRef.key;
 
       // Making sure we have a key to return to this function's caller
@@ -115,6 +118,11 @@ export class RealtimeDbService {
     }
   }
 
+  /**
+   *
+   * @param path
+   * @param data
+   */
   protected async updateEntry<T>(path: string, data: T): Promise<void> {
     try {
       const entryRef = ref(this.database, path);
