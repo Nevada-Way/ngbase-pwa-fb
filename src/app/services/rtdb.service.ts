@@ -47,23 +47,11 @@ export class RealtimeDbService {
   protected async createEntry<T>(
     path: string,
     data: T,
-    addTimestamp: boolean, // Controls wether to add a timestamp to the entry
     generateFbUniqueKey: boolean // Controls wether to use the 'path' as is or to use FB auto gen ID
   ): Promise<string> {
     try {
       /////////////////////////////////////////////////////////////////
-      // STEP-1: Preping the data object we want to write to the database.
-      // Here we determin if to append a timestamp property to the input
-      // data object by the true/false value of the 'addTimestamp' parameter.
-      const newData = addTimestamp
-        ? {
-            ...data,
-            timeStamped: serverTimestamp(), // Add or overwrite timeStamped with the server timestamp
-          }
-        : data; //Case we dont opt for timestampo so the original input data is used
-
-      /////////////////////////////////////////////////////////////////
-      // STEP-2: Create a placeholder reference to the inputed path
+      // STEP-1: Create a placeholder reference to the inputed path
       //         FYI: If we use this value to set() the data object then the
       //         name of the root of the object (the key) will be the last part
       //         of the path parameter.
@@ -72,7 +60,7 @@ export class RealtimeDbService {
       const entryRef: DatabaseReference = ref(this.database, path);
 
       /////////////////////////////////////////////////////////////////
-      // STEP-3: Decide on the value of the new entry's key
+      // STEP-2: Decide on the value of the new entry's key
       //         and create a new entry reference with that key.
       //      We have two options here:
       //      (A) If generateFbUniqueKey is true then we will let Firebase
@@ -82,7 +70,7 @@ export class RealtimeDbService {
       let newerEntryRef: DatabaseReference | null = null;
 
       if (generateFbUniqueKey) {
-        // STEP-3A :
+        // STEP23A :
         // Case (A) when generateFbUniqueKey is true so we invoke the
         // push() method to have Firebase create the key.
         // We need to use the 'entryRef' value so that firebase will know for what
@@ -91,7 +79,7 @@ export class RealtimeDbService {
 
         newerEntryRef = push(entryRef); // Genreating a unique chronological key value
       } else {
-        // STEP-3B :
+        // STEP-32 :
         // Case (B) when generateFbUniqueKey is false so we use the last part of the
         // path parameter as the key of the new entry.
         //
@@ -107,11 +95,9 @@ export class RealtimeDbService {
       }
 
       /////////////////////////////////////////////////////////////////
-      // STEP-4: Write the data object to the database  using the
+      // STEP-3: Write the data object to the database  using the
       //         reference to the new entry (for either of cases (A) or (B) above).
-      await set(newerEntryRef, newData); // Writing the data object to the database
-
-      // TODO 2025.03.21.19.29 MAKE SURE WORKS IN BOTH CASES
+      await set(newerEntryRef, data); // Writing the data object to the database
 
       const newEntryKey = newerEntryRef.key;
 
@@ -137,5 +123,41 @@ export class RealtimeDbService {
       console.error('Error updating Realtime Database entry:', error);
       throw error;
     }
+  }
+
+  /**
+   * This generic function takes a data object as input and appends to
+   * it a property named 'timestamp' with the value of the server's timestamp.
+   * @param data
+   * @returns
+   */
+  protected async appendFbUnixTimestampToObject<T>(
+    data: T
+  ): Promise<T & { timestamp: object }> {
+    // This const receives a value of type object { '.sv': 'timestamp' }
+    // which is a special placeholder value that is used to write a
+    // timestamp to the Firebase Realtime Database.
+    //
+    const placeHolderTimestampObject = serverTimestamp();
+    //
+    // When the object is written to the database this
+    // object { '.sv': 'timestamp' } will be replaced by a unix
+    // timestamp for example : 1629780000 of type <number>
+    //
+    // Unix timestamp is the number of seconds that have elapsed since
+    // the Unix epoch (January 1, 1970, at 00:00:00 Coordinated Universal Time (UTC)).
+    // Example value of a unix timestamp: 1629780000 for date 2021-08-24 12:00:00
+
+    // So we dont have control over the value, type or format of the timestamp
+    // it will always be a unix timestamp of type <number>.
+    // Your app , when retreiving the timestamp from the database, can convert
+    // the unix timestamp to a Date object using the Date constructor.
+
+    const newData = {
+      ...data,
+      timestamp: serverTimestamp(), // Value is object { '.sv': 'timestamp' }
+    };
+
+    return newData as T & { timestamp: object };
   }
 }

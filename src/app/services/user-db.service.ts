@@ -12,10 +12,32 @@ export class UserDbService extends RealtimeDbService {
   }
 
   async createNewUser(
-    userDataObject: UserInfoModel,
-    appendTimestampToMyDataObject: boolean,
+    originalUserDataObject: UserInfoModel,
+    appendTimestampToMyDataObject: boolean, // Controls wether to add a timestamp to the entry
     iWantFbToGenerateTheRootObjectId: boolean
   ): Promise<string> {
+    /////////////////////////////////////////////////
+    // Managing the option to append a timestamp
+    let newDataObject;
+    if (appendTimestampToMyDataObject) {
+      newDataObject = await this.appendFbUnixTimestampToObject(
+        originalUserDataObject
+      );
+      console.log(
+        'createNewUser() Want timestamp case: newDataObject:',
+        newDataObject
+      );
+    } else {
+      newDataObject = originalUserDataObject;
+      console.log(
+        'createNewUser(): No timestamp case: newDataObject:',
+        newDataObject
+      );
+    }
+
+    ////////////////////////////////////////////////////
+    // Preping the path parameter
+    ////////////////////////////////////////////////////
     const pathOfUsersTree = '/my-users/';
     //const appendTimestampToMyDataObject = false;
 
@@ -30,21 +52,14 @@ export class UserDbService extends RealtimeDbService {
       // 'userDataObject.userId' parameter.
       // BUT if you use your own custom id then turn off the value of the
       // 'useFbCustomId' parameter in the 'createEntry' method below.
-      fullPathToUserId = pathOfUsersTree + '/' + userDataObject.userId;
+      fullPathToUserId = pathOfUsersTree + '/' + newDataObject.userId;
     }
 
     try {
       // Create a new entry in the database
       const autoGenFirebaseKey = await this.createEntry<UserInfoModel>(
         fullPathToUserId,
-        userDataObject,
-
-        appendTimestampToMyDataObject, // If false no FB timestamp will
-        // be added to the userDataObject BUT only works if the
-        // iWantFbToGenerateTheRootObjectId == false.
-        // TODO : I need to isolate the "appending timestamp to data object"
-        // as a separate method. Then i can take it out of the generic createEntry()
-        // method and use it whnever i want  atimestamp appended to any onbject in any method.
+        newDataObject,
 
         iWantFbToGenerateTheRootObjectId // Value of createEntry() 's useFbCustomId
         // if true then the value of the object's root
@@ -59,7 +74,7 @@ export class UserDbService extends RealtimeDbService {
         // That way our userId will have the same unique value of the location
         //  reference it is stored in the database.
         const updatedUserData = {
-          ...userDataObject,
+          ...newDataObject,
           userId: autoGenFirebaseKey,
         };
 
