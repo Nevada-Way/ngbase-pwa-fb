@@ -119,6 +119,25 @@ export class RealtimeDbService {
     }
   }
 
+  /**
+   * Updates specific properties that make up a partial part of the data
+   * object of an existing entry in the Realtime Database.
+   *
+   * This method uses the `update()` function to modify only the provided properties
+   * of the data at the specified `path`. It does not overwrite the entire entry.
+   *
+   * @template T The type of the data object.
+   * @param path The Realtime Database path to the entry that will be updated.
+   * @param data An object containing the properties to update. The type is `Partial<T>`,
+   * which means only a subset of the properties from type `T` is required.
+   * @returns A Promise that resolves when the update is successful, or rejects with an error.
+   * @throws An error if the update operation fails.
+   *
+   * @example
+   * // Update the user's level
+   * const updateData = { userLevel: 5 };
+   * await updateEntry('users/-OLpCYSTepIROyBtkr11', updateData);
+   */
   protected async updateEntry<T>(
     path: string,
     data: Partial<T>

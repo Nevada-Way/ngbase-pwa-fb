@@ -52,21 +52,26 @@ export class UserDbService extends RealtimeDbService {
 
     let fullPathToUserId;
     if (iWantFbToGenerateTheRootObjectId) {
+      // Opting for firebase auto gen key we need the path to the root of the
+      // users tree.
+      //  The last part of the path will be added automatically by FB
+      // when we call the the createEntry() method.
       fullPathToUserId =
         pathOfUsersTree /* Later on the fb generated user-id will be appended */;
     } else {
-      // If you want to test the option where the object's root is named with
-      // by your own custom user id name then use the 'fullPathToUserId' below.
-      // Notice that the last part of the path has the value of the id in the
-      // 'userDataObject.userId' parameter.
-      // BUT if you use your own custom id then turn off the value of the
-      // 'useFbCustomId' parameter in the 'createEntry' method below.
+      // Opting for programatically naming the object's root we need to
+      // concatinate to the end of the path the value of the [my data object].userId .
       fullPathToUserId = pathOfUsersTree + '/' + newDataObject.userId;
     }
 
+    ////////////////////////////////////////////////////
+    // Creating the new user object in real time database
+    // FYI: The 'createEntry()' will implement the naming of the object's root
+    //      based on the value of the 'iWantFbToGenerateTheRootObjectId' parameter.
+    ////////////////////////////////////////////////////
     try {
       // Create a new entry in the database
-      const autoGenFirebaseKey: string = await this.createEntry<UserInfoModel>(
+      const keyOfNewUserInDb: string = await this.createEntry<UserInfoModel>(
         fullPathToUserId,
         newDataObject,
 
@@ -78,28 +83,28 @@ export class UserDbService extends RealtimeDbService {
         // will be 'user-23'
       );
 
+      /////////////////////////////////////////////////
+      // Managing the option to update the 'userId' property
+      // Now that we have the user object in the database we need
+      // make sure that the value of userId is same as the value of the root key.
+      // If we opted for for programatically naming the object's root then
+      // we dont need to do anything, because the object was created with the
+      // correct key value by the last part of the path.
+      // But in case we opted for the FB auto-generated key we can only now
+      // use the value we got from the createEntry() method and update the
+      // 'userId' property of the object.
+      /////////////////////////////////////////////////
       if (iWantFbToGenerateTheRootObjectId) {
         //Now that we have the FB auto generated key we can
         // calculate the path to the newly created object
-        fullPathToUserId = pathOfUsersTree + '/' + autoGenFirebaseKey;
+        fullPathToUserId = pathOfUsersTree + '/' + keyOfNewUserInDb;
 
         // And now we can also update the value of the 'userId' property
-        const updatedUserData = { userId: autoGenFirebaseKey };
+        const updatedUserData = { userId: keyOfNewUserInDb };
         await this.updateEntry(fullPathToUserId, updatedUserData);
       }
-      ////// This section will update the userDataObject.userId with the entryAutoId
-      // That way our userId will have the same unique value of the location
-      //  reference it is stored in the database.
-      // const updatedUserData = {
-      //   ...newDataObject,
-      //   userId: autoGenFirebaseKey,
-      // };
 
-      // Update the entry in the database with the updated data
-      //await this.completeOverwriteEntry(fullPathToUserId, updatedUserData);
-      //}
-
-      return autoGenFirebaseKey;
+      return keyOfNewUserInDb;
     } catch (error) {
       console.error('Error creating user:', error);
       throw error; // Re-throw the error to be handled by the caller
