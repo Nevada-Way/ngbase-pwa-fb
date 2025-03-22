@@ -63,8 +63,8 @@ export class AppComponent {
         userFirstName: fakeFirstName,
         userLevel: fakeUserLevel,
       },
-      false, // Append timestamp to data object
-      false // Use FB auto gen ID
+      true, // Append timestamp to data object
+      true // Use FB auto gen ID
     );
   }
 
