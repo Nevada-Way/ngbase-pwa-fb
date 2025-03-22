@@ -51,17 +51,21 @@ export class AppComponent {
 
     // The appGeneratedUserId is used here as placheholder for
     // a future option to have the app generate the userId.
-    const appGeneratedUserId = 'app-user-id-3';
+    const appGeneratedUserId = 'app-user-id-5';
 
-    const fakeFirstName_1 = 'first-name-3';
-    const fakeUserLevel = 2;
+    const fakeFirstName = 'first-name-5';
+    const fakeUserLevel = 36;
 
     //////////////////////
-    this.userDbService.createNewUser({
-      userId: appGeneratedUserId,
-      userFirstName: fakeFirstName_1,
-      userLevel: fakeUserLevel,
-    });
+    this.userDbService.createNewUser(
+      {
+        userId: appGeneratedUserId,
+        userFirstName: fakeFirstName,
+        userLevel: fakeUserLevel,
+      },
+      true, // Append timestamp to data object
+      true // Use FB auto gen ID
+    );
   }
 
   /**
