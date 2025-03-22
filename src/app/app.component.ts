@@ -62,9 +62,9 @@ export class AppComponent {
 
     // The appGeneratedUserId is used here as placheholder for
     // a future option to have the app generate the userId.
-    const appGeneratedUserId = 'app-user-id-2';
-    const fakeFirstName = 'first-name-2';
-    const fakeUserLevel = 13;
+    const appGeneratedUserId = 'app-user-id-3';
+    const fakeFirstName = 'first-name-3';
+    const fakeUserLevel = 33;
 
     ////////////////////////////////////////////////////////
     // This section calls the create user method
