@@ -122,9 +122,19 @@ This chapter focuses on Firebase Realtime Database
 
 - ✔ To the existing FB project (used in chp-04) I added the Realtime DB tool
 - ✔ I created a generic service (rtdb.service)to directly interact with the rtdb.
-- It curently has a createEntry() method and a updateEntry() method.
+- It curently has these methods :
+
+  - createEntry()
+  - updateEntry()
+  - completeOverwriteEntry()
+  - appendFbUnixTimestampToObject()
+
 - ✔ I created a specific feature service (user-db.service) to interact with the rtdb service.
-- It curently has a createNewUser() method.
+- It curently has a createNewUser() method with two feature options:
+
+  - An option to insert a timestamp property to the data object (in unix format )
+  - An option to have the db root-name of the object to be a firebase sequential key code
+    otherwise the root-name will be the last part of the path argument.
 
 - ✔ To verify that the services work I created a testRealTimeDbService() function in
   the app.component and invoke it from ngOnInit(). Its only action is to create a new user object.
