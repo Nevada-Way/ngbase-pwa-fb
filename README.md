@@ -137,7 +137,7 @@ and to have a 'main' branch we would rename our new-branch to the name 'main'.
 
 ===================================
 
-REMOVE THE HELPER SOURCE REMOTE
+4. REMOVE THE HELPER SOURCE REMOTE
 
 Remove the source remote, you dont need it from now on
 It was only needed once to fetch the branch:
@@ -146,7 +146,7 @@ git remote remove my-source
 
 # ===================================
 
-CREATE INITIAL COMMIT
+5. CREATE INITIAL COMMIT
 
 Edit the README.md or any other file just to get the commit ability.
 git add .
@@ -163,7 +163,7 @@ Type 'q' to quit the log list
 
 # ===================================
 
-CONNECT AND PUSH TO REMOTE CLOUD REPO
+6. CONNECT AND PUSH TO REMOTE CLOUD REPO
 
 git remote add origin <url_from_the_new_cloud_repo>
 
@@ -172,3 +172,13 @@ git push --set-upstream origin main
 You may get an error: remote: Permission to ... denied ...
 In that case approve invite the current (denied) git account as contributer
 into the account where you set up you new cloud repo.
+
+# ===================================
+
+7. INSTALL DEPENDENCIES
+
+Once the new branch has the code from the original branch
+and is pushed to the cloud, now its time to run and see that it works.
+
+The dependencies need to be installed so :
+npm install
