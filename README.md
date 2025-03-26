@@ -74,6 +74,75 @@ This chapter includes :
 - ✔ Tested & passed deploy on netlify. Worked well using netlify's own environment variables
   used as substitute for the .env which is excluded from the git repo.
 
+### chp-04-angular-fire
+
+This chapter focuses on Firebase Firestore
+
+- ✔ I created a FB project in the FB console.
+- ✔ Installed @angular/fire
+- ✔ In .env file I set the real values for the firebase & Firestore API
+  I also did this in the netlify environment values UI.
+- ✔ Added firebase as provider in app.config.ts
+- ✔ I created a firestore service in the services folder, this
+  holds the generic CRUD functions for firestore, any service/component
+  in the app can use these because they are generic.
+- ✔ I also created another service for CRUD operations, this is a specific
+  service for the app's log-entries.
+  The concept is seperation of concerns, each service is focused on its
+  specific task, so we dont want all of them interacting with
+  the fb api, so one shared service focuses on the interface with fb-api while
+  all the rest are focused on their tasks and interface with the shared service.
+
+- ✔ I implemented the CRUD functionality of the log-entries to be triggered
+  automaticaly every time the app.component constructor is activated (page refreshes)
+
+- BACKLOG
+- ❌ Need to name the doc id with a timestamp so that they are listed in FB console
+  chronologicaly.
+
+- ❌ Need to implement a UI to play around with the db
+  Add a button that when clicked creates a new log entry.
+
+- ❌ A input field to input id of item exiting db doc and radio buttons as follows :
+  (1) Radio button to Read message of doc
+  (2) Radio button to Update the doc (a hard-coded text is concatenated to start of message)
+  (3) Radio button to Delete the doc
+
+FYI : This code is not intended for UI interaction , just the programmer
+can set values in the code or comment out in order to control the app.
+This chp-04 is meant as base to develop your own interactions with FB.
+
+### =========================================================================================
+
+### chp-05-firebase-rtdb
+
+This chapter focuses on Firebase Realtime Database
+
+- ✔ To the existing FB project (used in chp-04) I added the Realtime DB tool
+- ✔ I created a generic service (rtdb.service)to directly interact with the rtdb.
+- It curently has these methods :
+
+  - createEntry()
+  - updateEntry()
+  - completeOverwriteEntry()
+  - appendFbUnixTimestampToObject()
+
+- ✔ I created a specific feature service (user-db.service) to interact with the rtdb service.
+- It curently has a createNewUser() method with two feature options:
+
+  - An option to insert a timestamp property to the data object (in unix format )
+  - An option to have the db root-name of the object to be a firebase sequential key code
+    otherwise the root-name will be the last part of the path argument.
+
+- ✔ To verify that the services work I created a testRealTimeDbService() function in
+  the app.component and invoke it from ngOnInit(). Its only action is to create a new user object.
+
+- BACKLOG
+- ❌ Add the read capability
+- ❌ Add the delete capability
+- ❌ In the user-db.service add an updateUser() function
+- ❌ Add function that fetches a list (like list of all the users)
+
 ### ===============================================================
 
 ### INSTRUCTION ON CREATING A NEW REPO FROM ANY ONE OF THE BRANCHES
@@ -192,72 +261,3 @@ The dependencies need to be installed so :
 npm install
 
 ### =========================================================================================
-
-### chp-04-angular-fire
-
-This chapter focuses on Firebase Firestore
-
-- ✔ I created a FB project in the FB console.
-- ✔ Installed @angular/fire
-- ✔ In .env file I set the real values for the firebase & Firestore API
-  I also did this in the netlify environment values UI.
-- ✔ Added firebase as provider in app.config.ts
-- ✔ I created a firestore service in the services folder, this
-  holds the generic CRUD functions for firestore, any service/component
-  in the app can use these because they are generic.
-- ✔ I also created another service for CRUD operations, this is a specific
-  service for the app's log-entries.
-  The concept is seperation of concerns, each service is focused on its
-  specific task, so we dont want all of them interacting with
-  the fb api, so one shared service focuses on the interface with fb-api while
-  all the rest are focused on their tasks and interface with the shared service.
-
-- ✔ I implemented the CRUD functionality of the log-entries to be triggered
-  automaticaly every time the app.component constructor is activated (page refreshes)
-
-- BACKLOG
-- ❌ Need to name the doc id with a timestamp so that they are listed in FB console
-  chronologicaly.
-
-- ❌ Need to implement a UI to play around with the db
-  Add a button that when clicked creates a new log entry.
-
-- ❌ A input field to input id of item exiting db doc and radio buttons as follows :
-  (1) Radio button to Read message of doc
-  (2) Radio button to Update the doc (a hard-coded text is concatenated to start of message)
-  (3) Radio button to Delete the doc
-
-FYI : This code is not intended for UI interaction , just the programmer
-can set values in the code or comment out in order to control the app.
-This chp-04 is meant as base to develop your own interactions with FB.
-
-### =========================================================================================
-
-### chp-05-firebase-rtdb
-
-This chapter focuses on Firebase Realtime Database
-
-- ✔ To the existing FB project (used in chp-04) I added the Realtime DB tool
-- ✔ I created a generic service (rtdb.service)to directly interact with the rtdb.
-- It curently has these methods :
-
-  - createEntry()
-  - updateEntry()
-  - completeOverwriteEntry()
-  - appendFbUnixTimestampToObject()
-
-- ✔ I created a specific feature service (user-db.service) to interact with the rtdb service.
-- It curently has a createNewUser() method with two feature options:
-
-  - An option to insert a timestamp property to the data object (in unix format )
-  - An option to have the db root-name of the object to be a firebase sequential key code
-    otherwise the root-name will be the last part of the path argument.
-
-- ✔ To verify that the services work I created a testRealTimeDbService() function in
-  the app.component and invoke it from ngOnInit(). Its only action is to create a new user object.
-
-- BACKLOG
-- ❌ Add the read capability
-- ❌ Add the delete capability
-- ❌ In the user-db.service add an updateUser() function
-- ❌ Add function that fetches a list (like list of all the users)
